@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A very kind message...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Courier New', monospace;
+        }
+
+        .message-container {
+            text-align: center;
+            font-size: 32px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid white;
+            white-space: nowrap;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            49% {
+                border-right-color: white;
+            }
+
+            50%,
+            100% {
+                border-right-color: transparent;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+
+        button:hover {
+            background-color: #ff5252;
+        }
+
+        button a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="message-container">
+        <div class="typewriter" id="message"></div>
+    </div>
+    <button id="button-container">
+        <a href="html.html">-Go back</a>
+    </button>
+    <script>
+        const messageElement = document.getElementById('message');
+        const initialMessage = "This is a very kind message";
+        const finalMessage = "╭∩╮( ^ ͜ʖ ^)╭∩╮";
+        const typeSpeed = 100; // milliseconds per character
+
+        async function typeMessage(text) {
+            messageElement.textContent = '';
+            messageElement.classList.remove('fade-out');
+
+            for (let i = 0; i < text.length; i++) {
+                messageElement.textContent += text[i];
+                await new Promise(resolve => setTimeout(resolve, typeSpeed));
+            }
+        }
+
+        async function fadeOutMessage() {
+            return new Promise(resolve => {
+                messageElement.classList.add('fade-out');
+                setTimeout(resolve, 500);
+            });
+        }
+
+        async function startAnimation() {
+            // Show initial message for 2 seconds
+            await typeMessage(initialMessage);
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Fade out initial message
+            await fadeOutMessage();
+
+            // Type the final message
+            await typeMessage(finalMessage);
+        }
+
+        // Start animation when page loads
+        window.addEventListener('load', startAnimation);
+    </script>
+</body>
+
+</html>
